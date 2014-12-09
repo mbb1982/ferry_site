@@ -10,7 +10,10 @@ item={:name=>name}
 ferry_page.search("table tr").each{ |row|
   key=row.children[0].inner_html
   value=row.children[1].inner_html
-  item[key]=value
+  unless ["Former names","Former owners","Sister ships","Notes"].include?(key)
+  
+    item[key]=value
+  end
 }
 
 ScraperWiki::save_sqlite([item['IMO']],item,"ferries")
