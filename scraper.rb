@@ -13,6 +13,6 @@ ferry_page.search("table tr").each{ |row|
   item[key]=value
 }
 
-ScraperWiki::save_sqlite(item['IMO'],item,"ferries")
+ScraperWiki::save_sqlite([item['IMO']],item,"ferries")
 
 
