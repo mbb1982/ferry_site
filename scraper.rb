@@ -10,6 +10,8 @@ all_page.links_with(:href=>/ferry.php/).each{ |link|
   name = ferry_page.search("center h2").inner_html
   item={:name=>name}
   
+  puts name
+  
   ferry_page.search("table tr").each{ |row|
     key=row.children[0].inner_html
     value=row.children[1].inner_html
