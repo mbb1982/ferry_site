@@ -22,8 +22,9 @@ all_page.links_with(:href=>/ferry.php/).each{ |link|
       item[key]=value
     end
   }
+  ScraperWiki::save_sqlite(['IMO'],item,"ferries")
 }
 
-ScraperWiki::save_sqlite(['IMO'],item,"ferries")
+
 
 
