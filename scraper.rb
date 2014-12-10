@@ -5,7 +5,14 @@ agent = Mechanize.new
 
 all_page = agent.get("http://ferrysite.dk/ferryname.php")
 
+link_done ={}
+
 all_page.links_with(:href=>/ferry.php/).each{ |link|
+  
+  next if link_done.has_key?(link.href)
+  
+  link_done[link.href]=1
+  
   ferry_page = link.click  #agent.get("http://ferrysite.dk/ferry.php?id=8502406&lang=en")
   encoding = ferry_page.encoding()
   
