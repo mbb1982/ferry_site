@@ -43,7 +43,7 @@ all_page.links_with(:href=>/ferry.php/).each{ |link|
     
     unless ["Former names","Former owners","Sister ships","Notes"].include?(key)
       key.gsub!(/ /,"_")
-      item[key]=value
+      item[key]=value.gsub(/<.*?>/,"")
     end
   }
   ScraperWiki::save_sqlite(['IMO'],item,"ferries")
