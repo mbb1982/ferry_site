@@ -17,6 +17,16 @@ all_page.links_with(:href=>/ferry.php/).each{ |link|
   ferry_page.search("table tr").each{ |row|
     key=row.children[0].inner_html.encode("UTF-8")
     value=row.children[1].inner_html.encode("UTF-8")
+    
+    if key == "Former names"
+      value.split(/<br>/).each{|line|
+        if tokens = /^(.*) \((.*)\-(.*)\) - (.*)/.match(line.gsub(/<.*?>/,""))
+          former_name = {:name=>tokens[1],:from=>tokens[2],:to=>tokens[3],operator=>tokens[4]}
+          ScraperWiki::save_sqlite(['name','from','to','operator'],former_name,"former_names")
+        end
+      }
+    end
+    
     unless ["Former names","Former owners","Sister ships","Notes"].include?(key)
       key.gsub!(/ /,"_")
       item[key]=value
