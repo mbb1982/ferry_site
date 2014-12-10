@@ -13,16 +13,30 @@ all_page.links_with(:href=>/ferry.php/).each{ |link|
   item={:name=>name}
   
   puts name
-  
+  imo = "99999999999"
   ferry_page.search("table tr").each{ |row|
     key=row.children[0].inner_html.encode("UTF-8")
     value=row.children[1].inner_html.encode("UTF-8")
     
+    
+    if key == "IMO"
+      imo=value
+    end
+    
+    if key == "GT"
+      if  gt_split=/(?:(.*) \/ )?(\d+)/.match(value.gsub(/\./,""))
+        if gt_split[1]
+          item[:ex_gt]=gt_split[1]
+        end
+        value=gt_split[2].to_i
+      end
+    end
+    
     if key == "Former names"
       value.split(/<br>/).each{|line|
         if tokens = /^(.*) \((.*)\-(.*)\) - (.*)/.match(line.gsub(/<.*?>/,""))
-          former_name = {:name=>tokens[1],:name_from=>tokens[2],:name_to=>tokens[3],:operator=>tokens[4],:key=>line.gsub(/<.*?>/,"")}
-          ScraperWiki::save_sqlite([:name,:name_from,:name_to,:operator],former_name,"former_names")
+          former_name = {:imo=>imo,:name=>tokens[1],:name_from=>tokens[2],:name_to=>tokens[3],:operator=>tokens[4],:key=>line.gsub(/<.*?>/,"")}
+          ScraperWiki::save_sqlite([:imo,:name,:name_from,:name_to,:operator],former_name,"former_names")
         end
       }
     end
