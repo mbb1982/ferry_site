@@ -7,7 +7,9 @@ all_page = agent.get("http://ferrysite.dk/ferrycompany.php?Rid=86")
 
 all_page.links_with(:href=>/ferry.php/).each{ |link|
   ferry_page = link.click  #agent.get("http://ferrysite.dk/ferry.php?id=8502406&lang=en")
-  name = ferry_page.search("center h2").inner_html
+  encoding = ferry_page.encoding()
+  
+  name = ferry_page.search("center h2").inner_html.encode("UTF-8")
   item={:name=>name}
   
   puts name
