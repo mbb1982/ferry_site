@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'mechanize'
 agent = Mechanize.new
 
-all_page = agent.get("http://ferrysite.dk/ferryname.php?")
+all_page = agent.get("http://ferrysite.dk/ferryname.php?letter=S")
 
 all_page.links_with(:href=>/ferry.php/).each{ |link|
   ferry_page = link.click  #agent.get("http://ferrysite.dk/ferry.php?id=8502406&lang=en")
