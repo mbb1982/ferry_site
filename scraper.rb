@@ -22,7 +22,7 @@ all_page.links_with(:href=>/ferry.php/).each{ |link|
       value.split(/<br>/).each{|line|
         if tokens = /^(.*) \((.*)\-(.*)\) - (.*)/.match(line.gsub(/<.*?>/,""))
           former_name = {:name=>tokens[1],:from=>tokens[2],:to=>tokens[3],:operator=>tokens[4],:key=>line.gsub(/<.*?>/,"")}
-          ScraperWiki::save_sqlite(['key'],former_name,"former_names")
+          ScraperWiki::save_sqlite([:name,:from,:to,:operator],former_name,"former_names")
         end
       }
     end
