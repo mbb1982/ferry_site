@@ -21,7 +21,7 @@ all_page.links_with(:href=>/ferry.php/).each{ |link|
     if key == "Former names"
       value.split(/<br>/).each{|line|
         if tokens = /^(.*) \((.*)\-(.*)\) - (.*)/.match(line.gsub(/<.*?>/,""))
-          former_name = {:name=>tokens[1],:from=>tokens[2],:to=>tokens[3],operator=>tokens[4]}
+          former_name = {:name=>tokens[1],:from=>tokens[2],:to=>tokens[3],:operator=>tokens[4]}
           ScraperWiki::save_sqlite(['name','from','to','operator'],former_name,"former_names")
         end
       }
